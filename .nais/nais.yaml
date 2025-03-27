@@ -61,7 +61,3 @@ spec:
     autoInstrumentation:
       enabled: true
       runtime: java
-  accessPolicy:
-    inbound:
-      rules:
-        - application: {{ application.eux-avslutt-rinasaker-til-avslutning-naisjob.name }}
