@@ -3,9 +3,7 @@ package no.nav.eux.saksbehandler.webapp.model
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(description = "Informasjon om Nav saksbehandler")
-data class SaksbehandlerApiModel(
-    @Schema(description = "Nav ident", example = "h278060")
-    val navIdent: String,
+data class SaksbehandlerPutApiModel(
     @Schema(
         description = """
         Brukeren sin foretrukne enhet. Enhet legges ved handlinger 

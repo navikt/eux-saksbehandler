@@ -2,7 +2,8 @@ package no.nav.eux.saksbehandler.webapp.controller
 
 import io.swagger.v3.oas.annotations.Parameter
 import jakarta.validation.Valid
-import no.nav.eux.saksbehandler.webapp.model.SaksbehandlerApiModel
+import no.nav.eux.saksbehandler.webapp.model.SaksbehandlerGetApiModel
+import no.nav.eux.saksbehandler.webapp.model.SaksbehandlerPutApiModel
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -20,7 +21,7 @@ class SaksbehandlerController {
         @Parameter(description = "", required = true)
         @PathVariable("navIdent")
         navIdent: String
-    ): ResponseEntity<SaksbehandlerApiModel> {
+    ): ResponseEntity<SaksbehandlerGetApiModel> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 
@@ -36,8 +37,8 @@ class SaksbehandlerController {
         @Parameter(description = "", required = true)
         @Valid
         @RequestBody
-        saksbehandler: SaksbehandlerApiModel
-    ): ResponseEntity<SaksbehandlerApiModel> {
+        saksbehandler: SaksbehandlerPutApiModel
+    ): ResponseEntity<Void> {
         return ResponseEntity(HttpStatus.NOT_IMPLEMENTED)
     }
 }
