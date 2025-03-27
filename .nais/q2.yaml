@@ -1,0 +1,10 @@
+name: eux-saksbehandler-q2
+ingress: https://eux-saksbehandler-q2.intern.dev.nav.no
+
+database:
+  name: eux-saksbehandler-db-q2
+  tier: db-f1-micro
+
+cluster:
+  fss: dev-fss
+  gcp: dev-gcp

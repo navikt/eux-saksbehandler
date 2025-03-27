@@ -1,0 +1,20 @@
+spring:
+  web:
+    resources:
+      cache:
+        period: 1
+
+  main:
+    banner-mode: "off"
+
+logging:
+  structured:
+    format:
+      console: logstash
+
+# noinspection SpringBootApplicationYaml
+no.nav.security.jwt:
+  issuer:
+    azuread:
+      discoveryurl: ${AZURE_APP_WELL_KNOWN_URL}
+      accepted-audience: ${AZURE_APP_CLIENT_ID}

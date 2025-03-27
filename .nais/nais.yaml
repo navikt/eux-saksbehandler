@@ -1,0 +1,67 @@
+kind: Application
+apiVersion: nais.io/v1alpha1
+metadata:
+  name: {{ name }}
+  namespace: eessibasis
+  labels:
+    team: eessibasis
+spec:
+  image: {{ image }}
+  ingresses:
+    - {{ ingress }}
+#  gcp:
+#    sqlInstances:
+#      - type: POSTGRES_17
+#        diskAutoresize: true
+#        tier: {{ database.tier }}
+#        databases:
+#          - name: {{ database.name }}
+#            envVarPrefix:
+#              DATABASE
+  liveness:
+    path: /actuator/health
+    port: 8080
+    initialDelay: 40
+    timeout: 90
+  port: 8080
+  prometheus:
+    enabled: true
+    path: /actuator/prometheus
+  readiness:
+    path: /actuator/health
+    port: 8080
+    initialDelay: 40
+    timeout: 90
+  replicas:
+    min: 1
+    max: 2
+    cpuThresholdPercentage: 90
+  resources:
+    limits:
+      cpu: "1"
+      memory: 3072Mi
+    requests:
+      cpu: 900m
+      memory: 2048Mi
+  azure:
+    application:
+      enabled: true
+      allowAllUsers: true
+      replyURLs:
+        - "{{ ingress }}/callback"
+      claims:
+        extra:
+          - "NAVident"
+    sidecar:
+      enabled: true
+      autoLogin: true
+      autoLoginIgnorePaths:
+        - /api/**
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: java
+  accessPolicy:
+    inbound:
+      rules:
+        - application: {{ application.eux-avslutt-rinasaker-til-avslutning-naisjob.name }}
