@@ -1,5 +1,6 @@
 package no.nav.eux.saksbehandler.webapp.controller
 
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.Content
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.*
 class SaksbehandlerController(
     val service: SaksbehandlerService
 ) {
+
+    val log = logger {}
 
     @Operation(
         summary = "Hent saksbehandler",
@@ -54,10 +57,13 @@ class SaksbehandlerController(
         navIdent: String
     ): ResponseEntity<SaksbehandlerGetApiModel> {
         val saksbehandler = service.get(navIdent)
-        return if (saksbehandler == null)
+        return if (saksbehandler == null) {
+            log.info { "Saksbehandler ikke funnet: $navIdent" }
             ResponseEntity(NOT_FOUND)
-        else
+        } else {
+            log.info { "Hentet saksbehandler $navIdent" }
             ResponseEntity(saksbehandler.toSaksbehandlerGetApiModel(), OK)
+        }
     }
 
     @Operation(
@@ -93,6 +99,40 @@ class SaksbehandlerController(
         saksbehandler: SaksbehandlerPutApiModel
     ): ResponseEntity<Void> {
         service.save(saksbehandler.toEntity(navIdent))
+        log.info { "Saksbehandler lagret: $navIdent" }
+        return ResponseEntity(NO_CONTENT)
+    }
+
+    @Operation(
+        summary = "Fjerner saksbehandler",
+        description = "Fjerner informasjon om en saksbehandler"
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "204",
+                description = "Saksbehandler fjernet",
+                content = [Content()]
+            ),
+            ApiResponse(
+                responseCode = "400",
+                description = "Ugyldig forespørsel",
+                content = [Content()]
+            )
+        ]
+    )
+    @DeleteMapping(
+        value = ["/api/v1/saksbehandlere/{navIdent}"],
+        produces = ["application/json"],
+        consumes = ["application/json"]
+    )
+    fun deleteSaksbehandlere(
+        @Parameter(description = "NAV ident til saksbehandler", required = true, example = "Z999999")
+        @PathVariable("navIdent")
+        navIdent: String
+    ): ResponseEntity<Void> {
+        service.delete(navIdent)
+        log.info { "Saksbehandler fjernet: $navIdent" }
         return ResponseEntity(NO_CONTENT)
     }
 }
