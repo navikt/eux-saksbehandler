@@ -15,6 +15,7 @@ on:
 env:
   APP_NAME: eux-saksbehandler
   IMAGE: ghcr.io/${{ github.repository }}/eux-saksbehandler
+  DATABASE_JDBC_URL: jdbc:postgresql://localhost:5432/postgres
   DATABASE_HOST: localhost
   DATABASE_PORT: 5432
   DATABASE_DATABASE: postgres
