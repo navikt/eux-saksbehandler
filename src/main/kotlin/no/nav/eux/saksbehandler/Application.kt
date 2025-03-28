@@ -2,11 +2,9 @@ package no.nav.eux.saksbehandler
 
 import com.zaxxer.hikari.HikariDataSource
 import io.swagger.v3.oas.models.OpenAPI
-import io.swagger.v3.oas.models.info.Contact
 import io.swagger.v3.oas.models.info.Info
 import no.nav.eux.logging.RequestIdMdcFilter
 import no.nav.eux.saksbehandler.config.DataSourceProperties
-
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -49,11 +47,6 @@ class ApplicationConfig(
                     .title("EUX Saksbehandler API")
                     .description("API for håndtering av NAV saksbehandlerinformasjon")
                     .version("1.0.0")
-                    .contact(
-                        Contact()
-                            .name("Vegard Hillestad")
-                            .email("vegard.lundeberg.hillestad@nav.no")
-                    )
             )
 
 }
