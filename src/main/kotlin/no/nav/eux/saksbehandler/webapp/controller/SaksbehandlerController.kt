@@ -86,7 +86,6 @@ class SaksbehandlerController(
     )
     @PutMapping(
         value = ["/api/v1/saksbehandlere/{navIdent}"],
-        produces = ["application/json"],
         consumes = ["application/json"]
     )
     fun putSaksbehandlere(
@@ -121,18 +120,20 @@ class SaksbehandlerController(
             )
         ]
     )
-    @DeleteMapping(
-        value = ["/api/v1/saksbehandlere/{navIdent}"],
-        produces = ["application/json"],
-        consumes = ["application/json"]
-    )
+    @DeleteMapping("/api/v1/saksbehandlere/{navIdent}")
     fun deleteSaksbehandlere(
         @Parameter(description = "NAV ident til saksbehandler", required = true, example = "Z999999")
         @PathVariable("navIdent")
         navIdent: String
     ): ResponseEntity<Void> {
-        service.delete(navIdent)
-        log.info { "Saksbehandler fjernet: $navIdent" }
-        return ResponseEntity(NO_CONTENT)
+        val saksbehandler = service.get(navIdent)
+        return if (saksbehandler == null) {
+            log.info { "Saksbehandler ikke funnet: $navIdent" }
+            ResponseEntity(NOT_FOUND)
+        } else {
+            service.delete(navIdent)
+            log.info { "Saksbehandler fjernet: $navIdent" }
+            return ResponseEntity(NO_CONTENT)
+        }
     }
 }

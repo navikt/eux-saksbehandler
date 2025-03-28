@@ -62,6 +62,57 @@ class SaksbehandlerTest : AbstractSaksbehandlerApiImplTest() {
         )
         entity.statusCode.value() shouldBe 404
     }
+
+    @Test
+    fun `PUT saksbehandlere - ugyldig data - 400`() {
+        val entity = restTemplate.exchange(
+            "/api/v1/saksbehandlere/3",
+            HttpMethod.PUT,
+            SaksbehandlerPutApiModelTest(favorittEnhetNr = "123").httpEntity,
+            Void::class.java
+        )
+        entity.statusCode.value() shouldBe 400
+    }
+
+    @Test
+    fun `DELETE saksbehandlere - slett eksisterende - 204`() {
+        restTemplate.exchange(
+            "/api/v1/saksbehandlere/4",
+            HttpMethod.PUT,
+            SaksbehandlerPutApiModelTest(favorittEnhetNr = "2950").httpEntity,
+            Void::class.java
+        )
+        val getBeforeDelete = restTemplate.exchange(
+            "/api/v1/saksbehandlere/4",
+            GET,
+            httpEntity(),
+            String::class.java
+        )
+        getBeforeDelete.statusCode.value() shouldBe 200
+        val deleteEntity = restTemplate.exchange(
+            "/api/v1/saksbehandlere/4",
+            HttpMethod.DELETE,
+            httpEntity(),
+            Void::class.java
+        )
+        deleteEntity.statusCode.value() shouldBe 204
+        val getAfterDelete = restTemplate.exchange<Void>(
+            url = "/api/v1/saksbehandlere/4",
+            method = GET,
+            requestEntity = httpEntity()
+        )
+        getAfterDelete.statusCode.value() shouldBe 404
+    }
+
+    @Test
+    fun `DELETE saksbehandlere - finnes ikke - 404`() {
+        val entity = restTemplate.exchange<Void>(
+            url = "/api/v1/saksbehandlere/finnesIkke",
+            method = HttpMethod.DELETE,
+            requestEntity = httpEntity()
+        )
+        entity.statusCode.value() shouldBe 404
+    }
 }
 
 data class SaksbehandlerPutApiModelTest(

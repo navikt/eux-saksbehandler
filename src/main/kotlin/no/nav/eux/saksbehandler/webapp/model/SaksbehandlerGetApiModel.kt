@@ -8,8 +8,8 @@ data class SaksbehandlerGetApiModel(
     val navIdent: String,
     @Schema(
         description = """
-        Brukeren sin foretrukne enhet. Enhet legges ved handlinger 
-        som opprettelse av oppgave og journalføring", example = "2950
+            Brukeren sin foretrukne enhet. Enhet legges ved handlinger 
+            som opprettelse av oppgave og journalføring", example = "2950
         """
     )
     val favorittEnhetNr: String,
