@@ -1,5 +1,6 @@
 package no.nav.eux.saksbehandler
 
+import io.kotest.matchers.shouldBe
 import no.nav.eux.saksbehandler.common.httpEntity
 import no.nav.eux.saksbehandler.common.voidHttpEntity
 import no.nav.security.mock.oauth2.MockOAuth2Server
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpEntity
+import org.springframework.http.HttpMethod
+import org.springframework.http.HttpMethod.GET
+import org.springframework.http.ResponseEntity
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.jdbc.JdbcTestUtils
@@ -43,4 +47,36 @@ abstract class AbstractSaksbehandlerApiImplTest {
     val <T> T.httpEntity: HttpEntity<T>
         get() = httpEntity(mockOAuth2Server)
 
+    infix fun ResponseEntity<*>.statusCodeShouldBe(expectedStatusCode: Int) {
+        this.statusCode.value() shouldBe expectedStatusCode
+    }
+
+    fun putSaksbehandler(navIdent: String, favorittEnhetNr: String = "2950"): ResponseEntity<Void> =
+        restTemplate.exchange(
+            "/api/v1/saksbehandlere/$navIdent",
+            HttpMethod.PUT,
+            SaksbehandlerPutApiModelTest(favorittEnhetNr).httpEntity,
+            Void::class.java
+        )
+
+    fun getSaksbehandler(navIdent: String): ResponseEntity<String> =
+        restTemplate.exchange(
+            "/api/v1/saksbehandlere/$navIdent",
+            GET,
+            httpEntity(),
+            String::class.java
+        )
+
+    fun deleteSaksbehandler(navIdent: String): ResponseEntity<Void> =
+        restTemplate.exchange(
+            "/api/v1/saksbehandlere/$navIdent",
+            HttpMethod.DELETE,
+            httpEntity(),
+            Void::class.java
+        )
 }
+
+
+data class SaksbehandlerPutApiModelTest(
+    val favorittEnhetNr: String,
+)
