@@ -10,8 +10,9 @@ data class SaksbehandlerPutApiModel(
     @Schema(
         description = """
             Brukeren sin foretrukne enhet. Enhet legges ved handlinger 
-            som opprettelse av oppgave og journalføring", example = "2950
-        """
+            som opprettelse av oppgave og journalføring
+        """,
+        example = "2950"
     )
     @field:NotBlank(message = "Favoritt enhet nummer kan ikke være tom")
     @field:Size(min = 4, max = 4, message = "Favoritt enhet nummer må være nøyaktig 4 tegn")

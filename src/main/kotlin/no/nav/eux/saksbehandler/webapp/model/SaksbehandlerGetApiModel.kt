@@ -9,8 +9,9 @@ data class SaksbehandlerGetApiModel(
     @Schema(
         description = """
             Brukeren sin foretrukne enhet. Enhet legges ved handlinger 
-            som opprettelse av oppgave og journalføring", example = "2950
-        """
+            som opprettelse av oppgave og journalføring
+        """,
+        example = "2950"
     )
     val favorittEnhetNr: String,
 )
