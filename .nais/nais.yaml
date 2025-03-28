@@ -9,15 +9,15 @@ spec:
   image: {{ image }}
   ingresses:
     - {{ ingress }}
-#  gcp:
-#    sqlInstances:
-#      - type: POSTGRES_17
-#        diskAutoresize: true
-#        tier: {{ database.tier }}
-#        databases:
-#          - name: {{ database.name }}
-#            envVarPrefix:
-#              DATABASE
+  gcp:
+    sqlInstances:
+      - type: POSTGRES_17
+        diskAutoresize: true
+        tier: {{ database.tier }}
+        databases:
+          - name: {{ database.name }}
+            envVarPrefix:
+              DATABASE
   liveness:
     path: /actuator/health
     port: 8080

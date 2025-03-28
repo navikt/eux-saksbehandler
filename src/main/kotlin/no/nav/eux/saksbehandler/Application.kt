@@ -1,6 +1,8 @@
 package no.nav.eux.saksbehandler
 
+import com.zaxxer.hikari.HikariDataSource
 import no.nav.eux.logging.RequestIdMdcFilter
+import no.nav.eux.saksbehandler.config.DataSourceProperties
 
 import no.nav.security.token.support.spring.api.EnableJwtTokenValidation
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -17,6 +19,7 @@ import org.springframework.context.annotation.Configuration
 )
 @SpringBootApplication
 @EnableConfigurationProperties(
+    DataSourceProperties::class
 )
 class Application
 
@@ -26,7 +29,11 @@ fun main(args: Array<String>) {
 
 @Configuration
 class ApplicationConfig(
+    val dataSourceProperties: DataSourceProperties
 ) {
+
+    @Bean
+    fun hikariDataSource() = HikariDataSource(dataSourceProperties.hikari)
 
     @Bean
     fun requestIdMdcFilter() = RequestIdMdcFilter()

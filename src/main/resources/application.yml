@@ -1,8 +1,25 @@
 spring:
-  web:
-    resources:
-      cache:
-        period: 1
+
+  datasource:
+    hikari:
+      jdbc-url: "jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_DATABASE}"
+      username: ${DATABASE_USERNAME}
+      password: ${DATABASE_PASSWORD}
+      driver-class-name: org.postgresql.Driver
+      maximum-pool-size: 2
+      minimum-idle: 1
+      initialization-fail-timeout: 60000
+
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        show_sql: false
+        use_sql_comments: false
+        format_sql: false
+
+  flyway:
+    clean-disabled: true
 
   main:
     banner-mode: "off"
