@@ -8,3 +8,8 @@ database:
 cluster:
   fss: dev-fss
   gcp: dev-gcp
+
+application:
+  eux-neessi:
+    name: eux-neessi-q2
+    namespace: eessibasis

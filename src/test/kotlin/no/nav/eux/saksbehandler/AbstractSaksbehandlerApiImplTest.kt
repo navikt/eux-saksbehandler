@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
-import org.springframework.http.HttpMethod.GET
 import org.springframework.http.ResponseEntity
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.context.ActiveProfiles
@@ -51,7 +50,7 @@ abstract class AbstractSaksbehandlerApiImplTest {
         this.statusCode.value() shouldBe expectedStatusCode
     }
 
-    fun putSaksbehandler(navIdent: String, favorittEnhetNr: String = "2950"): ResponseEntity<Void> =
+    fun putSaksbehandler(navIdent: String, favorittEnhetNr: String): ResponseEntity<Void> =
         restTemplate.exchange(
             "/api/v1/saksbehandlere/$navIdent",
             HttpMethod.PUT,
@@ -62,7 +61,7 @@ abstract class AbstractSaksbehandlerApiImplTest {
     fun getSaksbehandler(navIdent: String): ResponseEntity<String> =
         restTemplate.exchange(
             "/api/v1/saksbehandlere/$navIdent",
-            GET,
+            HttpMethod.GET,
             httpEntity(),
             String::class.java
         )
@@ -75,7 +74,6 @@ abstract class AbstractSaksbehandlerApiImplTest {
             Void::class.java
         )
 }
-
 
 data class SaksbehandlerPutApiModelTest(
     val favorittEnhetNr: String,

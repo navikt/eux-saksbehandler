@@ -61,3 +61,9 @@ spec:
     autoInstrumentation:
       enabled: true
       runtime: java
+  accessPolicy:
+    inbound:
+      rules:
+        - application: {{ application.eux-neessi.name }}
+          namespace: {{ application.eux-neessi.namespace }}
+          cluster: {{ cluster.gcp }}
