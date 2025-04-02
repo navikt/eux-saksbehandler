@@ -13,3 +13,13 @@ application:
   eux-neessi:
     name: eux-neessi-q2
     namespace: eessibasis
+
+resources:
+  limits:
+    memory: 512Mi
+  requests:
+    memory: 512Mi
+
+replicas:
+  min: 2
+  max: 3
