@@ -7,7 +7,7 @@
     <parent>
         <groupId>no.nav.eux</groupId>
         <artifactId>parent-pom</artifactId>
-        <version>1.0.38</version>
+        <version>1.0.41</version>
     </parent>
 
     <groupId>no.nav.eux.saksbehandler</groupId>
@@ -166,11 +166,6 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.awaitility</groupId>
-            <artifactId>awaitility-kotlin</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
