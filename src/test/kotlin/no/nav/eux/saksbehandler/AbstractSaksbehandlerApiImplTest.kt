@@ -68,14 +68,6 @@ abstract class AbstractSaksbehandlerApiImplTest {
             String::class.java
         )
 
-    fun getCount(): ResponseEntity<String> =
-        restTemplate.exchange(
-            "/api/v1/saksbehandlere/count",
-            HttpMethod.GET,
-            httpEntity(),
-            String::class.java
-        )
-
     fun deleteSaksbehandler(navIdent: String): ResponseEntity<Void> =
         restTemplate.exchange(
             "/api/v1/saksbehandlere/$navIdent",
