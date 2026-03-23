@@ -36,6 +36,22 @@ class SaksbehandlerTest : AbstractSaksbehandlerApiImplTest() {
     }
 
     @Test
+    fun `GET count - ingen saksbehandlere - 0`() {
+        val response = getCount()
+        response statusCodeShouldBe 200
+        response.body!! shouldEqualJson "0"
+    }
+
+    @Test
+    fun `GET count - to saksbehandlere - 2`() {
+        putSaksbehandler("10", "2950")
+        putSaksbehandler("11", "2950")
+        val response = getCount()
+        response statusCodeShouldBe 200
+        response.body!! shouldEqualJson "2"
+    }
+
+    @Test
     fun `PUT saksbehandlere - ugyldig data - 400`() {
         val putResponse = putSaksbehandler("3", "123")
         putResponse statusCodeShouldBe 400

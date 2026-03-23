@@ -27,6 +27,32 @@ class SaksbehandlerController(
     val log = logger {}
 
     @Operation(
+        summary = "Antall saksbehandlere",
+        description = "Returnerer totalt antall registrerte saksbehandlere"
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Antall saksbehandlere",
+                content = [Content(
+                    mediaType = "application/json",
+                    schema = Schema(implementation = Long::class)
+                )]
+            )
+        ]
+    )
+    @GetMapping(
+        value = ["/api/v1/saksbehandlere/count"],
+        produces = ["application/json"]
+    )
+    fun getCount(): ResponseEntity<Long> {
+        val count = service.count()
+        log.info { "Antall saksbehandlere: $count" }
+        return ResponseEntity(count, OK)
+    }
+
+    @Operation(
         summary = "Hent saksbehandler",
         description = "Henter informasjon om en saksbehandler basert på NAV ident"
     )

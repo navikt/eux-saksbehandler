@@ -16,6 +16,9 @@ class SaksbehandlerService(
     fun save(saksbehandler: Saksbehandler): Saksbehandler =
         repository.save(saksbehandler)
 
+    fun count(): Long =
+        repository.count()
+
     fun delete(navIdent: String) {
         repository.deleteById(navIdent)
     }
