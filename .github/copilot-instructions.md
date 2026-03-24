@@ -57,6 +57,12 @@ PostgreSQL with Flyway migrations in `src/main/resources/db/migration/`. Naming:
 - **Test names**: Norwegian descriptive sentences using backtick syntax
 - **Database**: Testcontainers PostgreSQL (started automatically, no manual setup)
 
+### Git workflow
+
+- **NEVER** commit to `main`
+- **NEVER** push `main`
+- Always work on a branch
+
 ### Deployment
 
 NAIS manifests in `.nais/`. Three environments: q1 (dev), q2 (dev), prod. The `#q-test` commit message tag skips prod deployment.
