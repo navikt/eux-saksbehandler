@@ -63,4 +63,29 @@ class SaksbehandlerTest : AbstractSaksbehandlerApiImplTest() {
         val putResponse = putSaksbehandler("6", "")
         putResponse statusCodeShouldBe 400
     }
+
+    @Test
+    fun `GET count - tom database - returnerer 0`() {
+        val countResponse = countSaksbehandlere()
+        countResponse statusCodeShouldBe 200
+        countResponse.body!! shouldEqualJson """
+            {
+              "antall": 0
+            }
+        """
+    }
+
+    @Test
+    fun `GET count - etter registrering - returnerer korrekt antall`() {
+        putSaksbehandler("1", "2950")
+        putSaksbehandler("2", "2951")
+        putSaksbehandler("3", "2952")
+        val countResponse = countSaksbehandlere()
+        countResponse statusCodeShouldBe 200
+        countResponse.body!! shouldEqualJson """
+            {
+              "antall": 3
+            }
+        """
+    }
 }

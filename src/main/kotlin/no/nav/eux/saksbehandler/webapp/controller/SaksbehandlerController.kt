@@ -12,6 +12,7 @@ import jakarta.validation.Valid
 import no.nav.eux.saksbehandler.service.SaksbehandlerService
 import no.nav.eux.saksbehandler.webapp.model.SaksbehandlerGetApiModel
 import no.nav.eux.saksbehandler.webapp.model.SaksbehandlerPutApiModel
+import no.nav.eux.saksbehandler.webapp.model.SaksbehandlereCountGetApiModel
 import no.nav.security.token.support.core.api.Protected
 import org.springframework.http.HttpStatus.*
 import org.springframework.http.ResponseEntity
@@ -25,6 +26,32 @@ class SaksbehandlerController(
 ) {
 
     val log = logger {}
+
+    @Operation(
+        summary = "Hent antall saksbehandlere",
+        description = "Returnerer antall registrerte saksbehandlere i systemet"
+    )
+    @ApiResponses(
+        value = [
+            ApiResponse(
+                responseCode = "200",
+                description = "Antall saksbehandlere",
+                content = [Content(
+                    mediaType = "application/json",
+                    schema = Schema(implementation = SaksbehandlereCountGetApiModel::class)
+                )]
+            )
+        ]
+    )
+    @GetMapping(
+        value = ["/api/v1/saksbehandlere/count"],
+        produces = ["application/json"]
+    )
+    fun countSaksbehandlere(): ResponseEntity<SaksbehandlereCountGetApiModel> {
+        val count = service.count()
+        log.info { "Antall saksbehandlere: $count" }
+        return ResponseEntity(count.toSaksbehandlereCountGetApiModel(), OK)
+    }
 
     @Operation(
         summary = "Hent saksbehandler",

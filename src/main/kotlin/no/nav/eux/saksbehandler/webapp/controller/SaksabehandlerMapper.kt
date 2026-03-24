@@ -3,6 +3,7 @@ package no.nav.eux.saksbehandler.webapp.controller
 import no.nav.eux.saksbehandler.model.Saksbehandler
 import no.nav.eux.saksbehandler.webapp.model.SaksbehandlerGetApiModel
 import no.nav.eux.saksbehandler.webapp.model.SaksbehandlerPutApiModel
+import no.nav.eux.saksbehandler.webapp.model.SaksbehandlereCountGetApiModel
 
 fun SaksbehandlerPutApiModel.toEntity(navIdent: String) =
     Saksbehandler(
@@ -14,4 +15,9 @@ fun Saksbehandler.toSaksbehandlerGetApiModel() =
     SaksbehandlerGetApiModel(
         navIdent = navIdent,
         favorittEnhetNr = favorittEnhetNr,
+    )
+
+fun Long.toSaksbehandlereCountGetApiModel() =
+    SaksbehandlereCountGetApiModel(
+        antall = this,
     )

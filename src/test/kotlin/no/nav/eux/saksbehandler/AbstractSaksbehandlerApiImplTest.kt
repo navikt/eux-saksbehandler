@@ -75,6 +75,14 @@ abstract class AbstractSaksbehandlerApiImplTest {
             httpEntity(),
             Void::class.java
         )
+
+    fun countSaksbehandlere(): ResponseEntity<String> =
+        restTemplate.exchange(
+            "/api/v1/saksbehandlere/count",
+            HttpMethod.GET,
+            httpEntity(),
+            String::class.java
+        )
 }
 
 data class SaksbehandlerPutApiModelTest(
