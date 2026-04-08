@@ -8,9 +8,11 @@ class SaksbehandlerTest : AbstractSaksbehandlerApiImplTest() {
     @Test
     fun `GET rinasaker - foresporsel, finn med id - 200`() {
         putSaksbehandler("1", "2950")
-        val getResponse = getSaksbehandler("1")
-        getResponse statusCodeShouldBe 200
-        val responseBody = getResponse.body!!
+        val responseBody = getSaksbehandler("1")
+            .expectStatus().isEqualTo(200)
+            .expectBody(String::class.java)
+            .returnResult()
+            .responseBody!!
         responseBody shouldEqualJson """
             {
               "navIdent": "1",
@@ -18,9 +20,11 @@ class SaksbehandlerTest : AbstractSaksbehandlerApiImplTest() {
             }
         """
         putSaksbehandler("1", "2951")
-        val updateResponse = getSaksbehandler("1")
-        updateResponse statusCodeShouldBe 200
-        val updatedResponseBody = updateResponse.body!!
+        val updatedResponseBody = getSaksbehandler("1")
+            .expectStatus().isEqualTo(200)
+            .expectBody(String::class.java)
+            .returnResult()
+            .responseBody!!
         updatedResponseBody shouldEqualJson """
             {
               "navIdent": "1",
@@ -31,36 +35,36 @@ class SaksbehandlerTest : AbstractSaksbehandlerApiImplTest() {
 
     @Test
     fun `GET rinasaker - foresporsel, ikke funnet - 404`() {
-        val getResponse = getSaksbehandler("finnesIkke")
-        getResponse statusCodeShouldBe 404
+        getSaksbehandler("finnesIkke")
+            .expectStatus().isEqualTo(404)
     }
 
     @Test
     fun `PUT saksbehandlere - ugyldig data - 400`() {
-        val putResponse = putSaksbehandler("3", "123")
-        putResponse statusCodeShouldBe 400
+        putSaksbehandler("3", "123")
+            .expectStatus().isEqualTo(400)
     }
 
     @Test
     fun `DELETE saksbehandlere - slett eksisterende - 204`() {
         putSaksbehandler("4", "2950")
-        val getResponseBefore = getSaksbehandler("4")
-        getResponseBefore statusCodeShouldBe 200
-        val deleteResponse = deleteSaksbehandler("4")
-        deleteResponse statusCodeShouldBe 204
-        val getResponseAfter = getSaksbehandler("4")
-        getResponseAfter statusCodeShouldBe 404
+        getSaksbehandler("4")
+            .expectStatus().isEqualTo(200)
+        deleteSaksbehandler("4")
+            .expectStatus().isEqualTo(204)
+        getSaksbehandler("4")
+            .expectStatus().isEqualTo(404)
     }
 
     @Test
     fun `DELETE saksbehandlere - finnes ikke - 404`() {
-        val deleteResponse = deleteSaksbehandler("finnesIkke")
-        deleteResponse statusCodeShouldBe 404
+        deleteSaksbehandler("finnesIkke")
+            .expectStatus().isEqualTo(404)
     }
 
     @Test
     fun `PUT saksbehandlere - tom favorittEnhetNr - 400`() {
-        val putResponse = putSaksbehandler("6", "")
-        putResponse statusCodeShouldBe 400
+        putSaksbehandler("6", "")
+            .expectStatus().isEqualTo(400)
     }
 }
